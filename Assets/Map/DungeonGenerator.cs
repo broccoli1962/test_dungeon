@@ -26,7 +26,7 @@ public class DungeonGenerator : MonoBehaviour
             for(int j = 0; j < b; j++)
             {
                 int rand_num = Random.Range(0, maps.Length);
-                Instantiate(maps[rand_num], new Vector3(i*length, 16.5f, j*length), Quaternion.identity);
+                Instantiate(maps[rand_num], new Vector3(i*length, 0, j*length), Quaternion.identity);
             }
         }
     }
