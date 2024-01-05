@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
-{   
+{
+    public InventoryObject inventory;
     protected float playerSpeed;
 
     private Transform playerTransform;
     private Transform cameraTransform;
     private Rigidbody rb;
     // Start is called before the first frame update
-    void Start()
+    void Start() 
     {
         rb = GetComponent<Rigidbody>();
         playerTransform = transform;
@@ -45,6 +46,20 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = moveDirection * playerSpeed;
             transform.forward = moveDirection;
         }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        var item = other.GetComponent<Item>();
+        if (item)
+        {
+            inventory.AddItem(item.item, 1);
+            Destroy(other.gameObject);
+        }
+    }
+    private void OnApplicationQuit()
+    {
+        inventory.Container.Clear();
     }
 
     void Move123()
