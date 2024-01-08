@@ -26,6 +26,17 @@ public class PlayerMovement : MonoBehaviour
             playerSpeed = GetComponent<PlayerStats>().MoveSpeed;
             Move();
         }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            inventory.Save();
+            Debug.Log("인벤저장완료");
+        }
+
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            inventory.Load();
+            Debug.Log("인벤로드완료");
+        }
     }
     
     void Move()

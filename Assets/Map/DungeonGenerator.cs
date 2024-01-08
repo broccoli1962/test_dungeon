@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.Profiling;
 
 public class DungeonGenerator : MonoBehaviour
 {
