@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Profiling.Memory.Experimental;
 using UnityEngine;
-using UnityEngine.Profiling;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -13,8 +11,6 @@ public class DungeonGenerator : MonoBehaviour
 
     [Header("∏ µÈ¿« «¡∏Æ∆’ ¿˙¿Â")]
     public GameObject[] maps = new GameObject[5];
-
-
     private void Start()
     {
         MapGenerator(Max_x, Max_y);
@@ -22,12 +18,12 @@ public class DungeonGenerator : MonoBehaviour
 
     void MapGenerator(int a, int b)
     {
-        for(int i = 0; i< a; i++)
+        for (int i = 0; i < a; i++)
         {
-            for(int j = 0; j < b; j++)
+            for (int j = 0; j < b; j++)
             {
                 int rand_num = Random.Range(0, maps.Length);
-                Instantiate(maps[rand_num], new Vector3(i*length, 0, j*length), Quaternion.identity);
+                Instantiate(maps[rand_num], new Vector3(i * length, 0, j * length), Quaternion.identity);
             }
         }
     }
