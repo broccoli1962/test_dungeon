@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219af187bcf80a543b0622f4d61d6be2, type: 3}
   m_Name: a piece of Pie
   m_EditorClassIdentifier: 
-  prefab: {fileID: 387014440081268125, guid: c931f4fc55a26b94b8550e2295a4d80c, type: 3}
+  id: 0
+  uiDisplay: {fileID: 21300000, guid: 4a39cb4b272639541b7bd5ac0649acf7, type: 3}
   type: 0
   description: A piece of Pie
+  buffs:
+  - attribute: 0
+    value: 0
+    min: 5
+    max: 10
   restoreHealthValue: 30
