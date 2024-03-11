@@ -70,26 +70,6 @@ public class PlayerMovement : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
-        inventory.Container.Items.Clear();
-    }
-
-    void Move123()
-    {
-        Vector3 forward = cameraTransform.forward;
-        forward.y = 0;
-        forward = Vector3.Normalize(forward);
-
-        Vector3 right = cameraTransform.right;
-
-        Vector3 RightMovement = right * playerSpeed * Time.smoothDeltaTime * Input.GetAxis("Horizontal");
-        Vector3 ForwardMovement = forward * playerSpeed * Time.smoothDeltaTime * Input.GetAxis("Vertical");
-        Vector3 FinalMovement = ForwardMovement + RightMovement;
-        Vector3 direction = Vector3.Normalize(FinalMovement);
-
-        if (direction != Vector3.zero)
-        {
-            transform.forward = direction;
-            transform.position += FinalMovement;
-        }
+        inventory.Container.Items = new InventorySlot[16];
     }
 }
