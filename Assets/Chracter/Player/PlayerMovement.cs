@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public MouseItem mouseItem = new MouseItem();
+
     public InventoryObject inventory;
     protected float playerSpeed;
 
