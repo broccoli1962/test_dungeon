@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ce2c72d5b5d1e7478d0d9ee8f407a42, type: 3}
   m_Name: Trash
   m_EditorClassIdentifier: 
-  id: 2
   uiDisplay: {fileID: 21300000, guid: b8fb302c5768e334ca82005f50e58121, type: 3}
-  type: 2
+  stackable: 1
+  type: 6
   description: Just Trash!
-  buffs: []
+  data:
+    Name: 
+    Id: 6
+    buffs: []

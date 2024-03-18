@@ -8,7 +8,6 @@ using UnityEngine.UI;
 
 public abstract class UserInterface : MonoBehaviour
 {
-    public PlayerMovement player;
     public InventoryObject inventory;
     public Dictionary<GameObject, InventorySlot> SlotsOnInterface = new Dictionary<GameObject, InventorySlot>();
     // Start is called before the first frame update
@@ -33,9 +32,9 @@ public abstract class UserInterface : MonoBehaviour
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in SlotsOnInterface)
         {
-            if (_slot.Value.ID >= 0)
+            if (_slot.Value.item.Id >= 0)
             {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
             }
@@ -57,40 +56,41 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void OnEnter(GameObject obj)
     {
-        player.mouseItem.hoverobj = obj;
-        if (SlotsOnInterface.ContainsKey(obj))
-        {
-            player.mouseItem.hoverItem = SlotsOnInterface[obj];
-        }
+        MouseData.slotHoveredOver = obj;
     }
     public void OnExit(GameObject obj)
     {
-        player.mouseItem.hoverobj = null;
-        player.mouseItem.hoverItem = null;
+        MouseData.slotHoveredOver = null;
     }
     public void OnEnterInterface(GameObject obj)
     {
-        player.mouseItem.ui = obj.GetComponent<UserInterface>();
+        MouseData.interfaceMouseIsOver = obj.GetComponent<UserInterface>();
     }
     public void OnExitInterface(GameObject obj)
     {
-        player.mouseItem.ui = null;
+        MouseData.interfaceMouseIsOver = null;
     }
     public void OnDragStart(GameObject obj)
     {
-        var mouseObject = new GameObject();
-        var rt = mouseObject.AddComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(50, 50);
-        mouseObject.transform.SetParent(transform.parent);
-        if (SlotsOnInterface[obj].ID >= 0)
+        MouseData.tempItemBeingDragged = CreateTempItem(obj);
+    }
+
+    public GameObject CreateTempItem(GameObject obj)
+    {
+        GameObject tempItem = null;
+        if (SlotsOnInterface[obj].item.Id >= 0)
         {
-            var img = mouseObject.AddComponent<Image>();
-            img.sprite = inventory.database.GetItem[SlotsOnInterface[obj].ID].uiDisplay;
+            tempItem = new GameObject();
+            var rt = tempItem.AddComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(50, 50);
+            tempItem.transform.SetParent(transform.parent);
+            var img = tempItem.AddComponent<Image>();
+            img.sprite = SlotsOnInterface[obj].ItemObject.uiDisplay;
             img.raycastTarget = false;
         }
-        player.mouseItem.obj = mouseObject;
-        player.mouseItem.item = SlotsOnInterface[obj];
+        return tempItem;
     }
+
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
@@ -102,15 +102,15 @@ public abstract class UserInterface : MonoBehaviour
         if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.SlotsOnInterface[MouseData.slotHoveredOver];
-            inventory.MoveItem
+            inventory.SwapItems(SlotsOnInterface[obj], mouseHoverSlotData);
         }
 
     }
     public void OnDrag(GameObject obj)
     {
-        if (player.mouseItem.obj != null)
+        if (MouseData.tempItemBeingDragged != null)
         {
-            player.mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
+            MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
         }
     }
 }

@@ -1386,6 +1386,7 @@ GameObject:
   - component: {fileID: 826741222}
   - component: {fileID: 826741221}
   - component: {fileID: 826741220}
+  - component: {fileID: 826741223}
   m_Layer: 5
   m_Name: Equitment
   m_TagString: Untagged
@@ -1473,6 +1474,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826741217}
   m_CullTransparentMesh: 1
+--- !u!114 &826741223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 826741217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &929472733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1486,6 +1500,7 @@ GameObject:
   - component: {fileID: 929472736}
   - component: {fileID: 929472739}
   - component: {fileID: 929472738}
+  - component: {fileID: 929472740}
   m_Layer: 5
   m_Name: InventorySystem
   m_TagString: Untagged
@@ -1590,6 +1605,19 @@ MonoBehaviour:
   inventory: {fileID: 11400000, guid: 3d4d6ff80d18f804a915b37b0782de2a, type: 2}
   inventoryPrefab: {fileID: 5776689040923107336, guid: 8d4c5bf9790e0454d8e787007539ccf0,
     type: 3}
+--- !u!114 &929472740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929472733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1001 &998184221
 PrefabInstance:
   m_ObjectHideFlags: 0

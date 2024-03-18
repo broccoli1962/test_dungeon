@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public MouseItem mouseItem = new MouseItem();
+    //public MouseItem mouseItem = new MouseItem();
 
     public InventoryObject inventory;
+    public InventoryObject equitment;
     protected float playerSpeed;
 
     private Transform playerTransform;
@@ -31,12 +32,14 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             inventory.Save();
+            equitment.Save();
             Debug.Log("인벤저장완료");
         }
 
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             inventory.Load();
+            equitment.Load();
             Debug.Log("인벤로드완료");
         }
     }
@@ -66,12 +69,16 @@ public class PlayerMovement : MonoBehaviour
         var item = other.GetComponent<GroundItem>();
         if (item)
         {
-            inventory.AddItem(new Item(item.item), 1);
-            Destroy(other.gameObject);
+            Item _item = new Item(item.item);
+            if(inventory.AddItem(_item, 1))
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
     private void OnApplicationQuit()
     {
-        inventory.Container.Items = new InventorySlot[16];
+        inventory.Container.Clear();
+        equitment.Container.Clear();
     }
 }
