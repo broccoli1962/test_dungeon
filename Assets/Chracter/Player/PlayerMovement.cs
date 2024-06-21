@@ -8,6 +8,8 @@ public class PlayerMovement : MonoBehaviour
 
     public InventoryObject inventory;
     public InventoryObject equitment;
+    public Attribute[] attributes;
+
     protected float playerSpeed;
 
     private Transform playerTransform;
@@ -19,9 +21,76 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerTransform = transform;
         cameraTransform = Camera.main.transform;
+
+        for(int i = 0; i < attributes.Length; i++) {
+            attributes[i].SetParent(this);
+        }
+        for(int i = 0;i < equitment.GetSlots.Length; i++) {
+            equitment.GetSlots[i].OnBeforeUpdate += OnBeforeSlotUpdate;
+            equitment.GetSlots[i].OnAfterUpdate += OnAfterSlotUpdate;
+        }
+
     }
 
-    // Update is called once per frame
+    public void OnBeforeSlotUpdate(InventorySlot _slot)
+    {
+        if(_slot.ItemObject == null)
+        {
+            return;
+        }
+        switch(_slot.parent.inventory.type)
+        {
+            case InterfaceType.Inventory:
+                break;
+            case InterfaceType.Equitment:
+                print(string.Concat("삭제", _slot.ItemObject, "on", _slot.parent.inventory.type, ", 허용된 아이템: ", string.Join(", ", _slot.AllowedItems)));
+
+                for (int i = 0; i < _slot.item.buffs.Length; i++)
+                {
+                    for (int j = 0; j < attributes.Length; j++)
+                    {
+                        if (attributes[j].type == _slot.item.buffs[i].attribute)
+                            attributes[j].value.RemoveModifier(_slot.item.buffs[i]);
+                    }
+                }
+
+                break;
+            case InterfaceType.Chest:
+                break;
+            default:
+                break;
+        }
+    }
+    public void OnAfterSlotUpdate(InventorySlot _slot)
+    {
+        if (_slot.ItemObject == null)
+        {
+            return;
+        }
+        switch (_slot.parent.inventory.type)
+        {
+            case InterfaceType.Inventory:
+                break;
+            case InterfaceType.Equitment:
+                print(string.Concat("배치", _slot.ItemObject, "on", _slot.parent.inventory.type, ", 허용된 아이템: ", string.Join(", ", _slot.AllowedItems)));
+                
+                for(int i = 0; i<_slot.item.buffs.Length; i++)
+                {
+                    for(int j = 0; j<attributes.Length; j++)
+                    {
+                        if (attributes[j].type == _slot.item.buffs[i].attribute)
+                            attributes[j].value.AddModifier(_slot.item.buffs[i]);
+                    }
+                }
+                break;
+            case InterfaceType.Chest:
+                break;
+            default:
+                break;
+        }
+    }
+
+    // Update is called once per frame 
     void Update()
     {
         if(Input.anyKey)
@@ -76,9 +145,34 @@ public class PlayerMovement : MonoBehaviour
             }
         }
     }
+
+    public void AttributeModified(Attribute attribute)
+    {
+        Debug.Log(string.Concat(attribute.type, "업데이트 완료! 현재값 : ", attribute.value.ModifiedValue));
+    }
+
     private void OnApplicationQuit()
     {
-        inventory.Container.Clear();
-        equitment.Container.Clear();
+        inventory.Clear();
+        equitment.Clear();
+    }
+}
+
+[System.Serializable]
+public class Attribute
+{
+    [System.NonSerialized]
+    public PlayerMovement parent;
+    public Attributes type;
+    public ModifiableInt value;
+
+    public void SetParent(PlayerMovement _parent)
+    {
+        parent = _parent;
+        value = new ModifiableInt(AttributeModified);
+    }
+    public void AttributeModified()
+    {
+        parent.AttributeModified(this);
     }
 }

@@ -9,17 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb169e1cd5813be48ba57130065d6c98, type: 3}
+  m_Script: {fileID: 11500000, guid: 07b054b074b123d47a0fba8f1645c037, type: 3}
   m_Name: Sword
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 21300000, guid: 5fd50594014b70e48bd6993443d46b32, type: 3}
   stackable: 0
   type: 2
-  description: "\uD754\uD574\uBE60\uC9C4 \uAC80. \uC8FC\uB85C \uC2DC\uC7A5\uAC00\uC5D0\uC11C
-    \uC790\uC8FC \uBCFC \uC218 \uC788\uB2E4."
+  description: 
   data:
     Name: 
-    Id: 5
-    buffs: []
-  atkBonus: 10
-  defenceBonus: 0
+    Id: 3
+    buffs:
+    - attribute: 3
+      value: 0
+      min: 6
+      max: 7

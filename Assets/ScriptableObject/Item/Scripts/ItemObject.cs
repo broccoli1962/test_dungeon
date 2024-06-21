@@ -20,7 +20,8 @@ public enum Attributes
     Stamina,
     Strngth
 }
-public abstract class ItemObject : ScriptableObject
+[CreateAssetMenu(fileName = "New Item", menuName = "Inventory System/Items/item")]
+public class ItemObject : ScriptableObject
 {
     public Sprite uiDisplay;
     public bool stackable;
@@ -63,7 +64,7 @@ public class Item
 }
 
 [System.Serializable]
-public class ItemBuff
+public class ItemBuff : IModifiers
 {
     public Attributes attribute;
     public int value;
@@ -75,6 +76,12 @@ public class ItemBuff
         max = _max;
         GenerateValue();
     }
+
+    public void AddValue(ref int baseValeu)
+    {
+        baseValeu += value;
+    }
+
     public void GenerateValue()
     {
         value = UnityEngine.Random.Range(min, max);
